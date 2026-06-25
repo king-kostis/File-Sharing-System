@@ -163,14 +163,15 @@ def main():
             if not command:
                 continue
             
-            parts = command.split()
+            parts = command.split(" ", 1)
             cmd = parts[0].lower()
             
             if cmd == "upload":
+                filepath = parts[1].strip("'\"")
                 if len(parts) < 2:
                     print("[CLIENT] Usage: upload <filepath>")
                 else:
-                    upload_file(client_socket, parts[1])
+                    upload_file(client_socket, filepath)
             
             elif cmd == "download":
                 if len(parts) < 2:
