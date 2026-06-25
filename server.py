@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 File-Sharing System - Server
-Network & Distributed Programming — Group 4 Project
+Network & Distributed Programming: Group 4 Project
 """
 
 import socket
