@@ -1,0 +1,12 @@
+__pycache__/  
+*.pyc  
+*.pyo  
+client_downloads/  
+server_storage/  
+*.png  
+*.jpg  
+*.jpeg  
+*.gif  
+*.pdf  
+*.docx  
+*.doc 
