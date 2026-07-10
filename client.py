@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 File-Sharing System - Client
-Network & Distributed Programming — Group 4 Project
+Network & Distributed Programming: Group 4 Project
 """
 
 import socket
@@ -39,13 +39,14 @@ def upload_file(client_socket, filepath):
     """Upload a file to the server."""
     if not os.path.exists(filepath):
         print(f"[CLIENT] Error: File '{filepath}' not found.")
+        print(f"[CLIENT] Resolved path: {os.path.abspath(filepath)}")
         return
     
     filename = os.path.basename(filepath)
     filesize = os.path.getsize(filepath)
     
-    # Send upload command
-    command = f"UPLOAD {filename} {filesize}\n"
+    # Send upload command (filesize first so filenames may contain spaces)
+    command = f"UPLOAD {filesize} {filename}\n"
     client_socket.sendall(command.encode('utf-8'))
     
     # Wait for acknowledgment
@@ -167,10 +168,10 @@ def main():
             cmd = parts[0].lower()
             
             if cmd == "upload":
-                filepath = parts[1].strip("'\"")
                 if len(parts) < 2:
                     print("[CLIENT] Usage: upload <filepath>")
                 else:
+                    filepath = parts[1].strip().strip("'\"")
                     upload_file(client_socket, filepath)
             
             elif cmd == "download":

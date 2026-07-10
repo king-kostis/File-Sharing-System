@@ -40,7 +40,7 @@ def handle_client(client_socket, client_address):
             if not command:
                 break
             
-            parts = command.split()
+            parts = command.split(" ", 2)
             
             if not parts:
                 continue
@@ -75,12 +75,12 @@ def handle_upload(client_socket, parts):
         client_socket.sendall(b"ERROR: Missing arguments.\n")
         return
     
-    filename = parts[1]
     try:
-        filesize = int(parts[2])
+        filesize = int(parts[1])
     except ValueError:
         client_socket.sendall(b"ERROR: Invalid file size.\n")
         return
+    filename = " ".join(parts[2:])
     
     # Sanitize filename
     filename = os.path.basename(filename)
@@ -122,7 +122,7 @@ def handle_download(client_socket, parts):
         client_socket.sendall(b"ERROR: Missing arguments.\n")
         return
     
-    filename = parts[1]
+    filename = " ".join(parts[1:])
     filepath = os.path.join(STORAGE_DIR, filename)
     
     if not os.path.exists(filepath):
